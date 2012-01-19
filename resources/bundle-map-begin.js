@@ -71,7 +71,7 @@
 				playerSpawnY:180,
 
 				addObjects:function() {
-					audio.playAudio("map-bgm");
+					AkihabaraAudio.playAudio("map-bgm");
 					maingame.addBlock(360,150,"house",0);
 					maingame.addNpc(390,220,[4],"villager",null,[4,5]);
 					maingame.addNpc(150,180,[6],"wife",null,[6,7]);

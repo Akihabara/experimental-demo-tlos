@@ -65,7 +65,7 @@
 					[  12,  12,  12,  12,  12,  12,  12,  12,  12,  12,  12,  12,  12,  12,  12,  12,  12,  12,  12,   5,   5,  12,  12,  12]
 				  ],
 				 addObjects:function() {
-					if (!tilemaps.queststatus["oldmanstory"]) audio.playAudio("map-bgm");
+					if (!tilemaps.queststatus["oldmanstory"]) AkihabaraAudio.playAudio("map-bgm");
 					if (!tilemaps.queststatus["treasure1"]) maingame.addChest(1,11,"treasure1",false,"coin");
 					if (!tilemaps.queststatus["treasure2"]) maingame.addChest(2,11,"treasure2",false,"coin");
 					if (!tilemaps.queststatus["treasure3"]) maingame.addChest(8,11,"treasure3",false,"coin");

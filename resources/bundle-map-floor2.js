@@ -67,7 +67,7 @@
 				],
 
 				addObjects:function() {
-					if (!tilemaps.queststatus["oldmanstory"]) audio.playAudio("map-bgm");
+					if (!tilemaps.queststatus["oldmanstory"]) AkihabaraAudio.playAudio("map-bgm");
 					if (tilemaps.queststatus["oldmanstory"]) // If you've heard the old man story...
 						maingame.addNpc(555,180,[8,9],"soul"); // The soul of the tricked appears.
 					if (!tilemaps.queststatus["floor2trapped"]) {
@@ -90,7 +90,7 @@
 					var ontile=help.getTileInMap(pl.x+pl.colx+pl.colhw,pl.y+pl.coly+pl.colhh,tilemaps.map,tilemaps._defaultblock,"map");
 					if (!tilemaps.queststatus["floor2trapped"]&&!tilemaps.queststatus["floor2untrapped"]){ // the trap on floor 2
 						if (ontile==4) {
-							audio.hitAudio("beep"); // Switch sound
+							AkihabaraAudio.hitAudio("beep"); // Switch sound
 							maingame.addDoor("sidedoor","doorv",10,4,true);
 							maingame.addEnemy("third1","octo",13,2,true);
 							maingame.addEnemy("third2","octo",21,2,true);
