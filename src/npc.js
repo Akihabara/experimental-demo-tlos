@@ -16,7 +16,7 @@ var Npc = function(x,y,still,dialogue,questid,talking,silence){
 		},
 
 		doPlayerAction:function(sw) {
-			if (this.silence) toys.generate.audio.fadeOut(this,"background",null,{channel:"bgmusic"});
+			if (this.silence) toys.generate.AkihabaraAudio.fadeOut(this,"background",null,{channel:"bgmusic"});
 			this.iamTalking=true; // go in talking mode
 			maingame.startDialogue(this.myDialogue); // Starts its dialogue. Is another object because of z-index
 		},

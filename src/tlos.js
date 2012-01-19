@@ -18,7 +18,7 @@ function objectIsAlive(th) {
 
 function go() {
 	gbox.setGroups(["background","player","bonus","foes","walls","playerbullets","foesbullets","sparks","foreground","gamecycle"]);
-	audio.setAudioChannels({bgmusic:{volume:0.8},sfx:{volume:1.0}});
+	AkihabaraAudio.setAudioChannels({bgmusic:{volume:0.8},sfx:{volume:1.0}});
 
 	// player, walls, bullets and foes are under z-index layer
 	gbox.setRenderOrder(["background",gbox.ZINDEX_LAYER,"sparks","foreground","gamecycle"]);
@@ -28,7 +28,7 @@ function go() {
 	// Title intro
 	maingame.gameTitleIntroAnimation=function(reset) {
 		if (reset) {
-			audio.playAudio("default-music");
+			AkihabaraAudio.playAudio("default-music");
 			toys.resetToy(this,"rising");
 		} else {
 			gbox.blitFade(gbox.getBufferContext(),{alpha:1,color:"rgb(150,150,150)"});
@@ -154,14 +154,14 @@ function go() {
 		help.setTileInMap(gbox.getCanvasContext("tileslayer"),tilemaps.map,x,y,tile);
 		if (smoke) {
 			var ts=gbox.getTiles(tilemaps.map.tileset);
-			audio.hitAudio("explosion"); // Switch sound
+			AkihabaraAudio.hitAudio("explosion"); // Switch sound
 			maingame.addSmoke({x:x*ts.tilew,y:y*ts.tilew,h:ts.tileh,w:ts.tilew,hh:ts.tilehh,hw:ts.tilehw,camera:true});
 		}
 	}
 
 	// Add the "QUEST CLEAR" message
 	maingame.addQuestClear=function(msg) {
-		if (msg==null) audio.hitAudio("default-menu-confirm"); // Switch sound
+		if (msg==null) AkihabaraAudio.hitAudio("default-menu-confirm"); // Switch sound
 		toys.generate.sparks.popupText(gbox.getObject("player","player"),"sparks",null,{font:"big",jump:6,text:(msg==null?"QUEST CLEAR!":msg),keep:20});
 	}
 
@@ -199,10 +199,10 @@ function go() {
 					if (this.questid!=null) tilemaps.queststatus[this.questid]=true; // Mark this door as opened
 					maingame.hud.addValue(this.openwith,"value",-1);
 					this.doOpen();
-					audio.hitAudio("default-menu-confirm");
+					AkihabaraAudio.hitAudio("default-menu-confirm");
 					maingame.addQuestClear(openwith+" USED");
 				} else {
-					audio.hitAudio("beepbad");
+					AkihabaraAudio.hitAudio("beepbad");
 					maingame.addQuestClear("NEEDS "+openwith);
 				}
 			}

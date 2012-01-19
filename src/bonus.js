@@ -36,7 +36,7 @@ var Bonus = function(x,y,type,id,expire,frames){
 				if (!this.unpicktime) {
 					var pl=gbox.getObject("player","player");
 					if (pl.collisionEnabled()&&(topview.collides(this,pl))) {
-						audio.hitAudio("coin");
+						AkihabaraAudio.hitAudio("coin");
 
 						switch (this.bonustype) {
 							case "coin": {

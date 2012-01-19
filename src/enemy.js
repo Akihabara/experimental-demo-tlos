@@ -25,7 +25,7 @@ var Enemy = function(id,type,x,y,cloud){
 
 				hitByBullet:function(by) {
 					if (by._canhitswitch&&!this.switchedon) { // if is hit by bullet
-						audio.hitAudio("default-menu-option");
+						AkihabaraAudio.hitAudio("default-menu-option");
 						this.changeSwitch(true);
 						maingame.addQuestClear(); // Say "quest clear"
 					}
@@ -68,7 +68,7 @@ var Enemy = function(id,type,x,y,cloud){
 					});
 				},
 				kill:function(by){
-					audio.hitAudio("hurt");
+					AkihabaraAudio.hitAudio("hurt");
 					toys.generate.sparks.simple(this,"sparks",null,{animspeed:2,accy:-3,tileset:"flame-blue"});
 					toys.generate.sparks.simple(this,"sparks",null,{animspeed:1,accx:-3,tileset:"flame-blue"});
 					toys.generate.sparks.simple(this,"sparks",null,{animspeed:1,accx:3,tileset:"flame-blue"});
@@ -77,7 +77,7 @@ var Enemy = function(id,type,x,y,cloud){
 				},
 
 				attack:function() {
-				if (gbox.objectIsVisible(this)) audio.hitAudio("hit"); // Only visible enemies plays audio: audio heard without seeying anything is confusing.
+				if (gbox.objectIsVisible(this)) AkihabaraAudio.hitAudio("hit"); // Only visible enemies plays audio: audio heard without seeying anything is confusing.
 					this.stilltimer=10; // Stay still for a while
 					this.frame=(this.facing==topview.FACE_UP?0:(this.facing==topview.FACE_DOWN?3:4));
 					toys.generate.sparks.simple(this,"sparks",null,{animspeed:2,accy:-2,tileset:"flame-white"});

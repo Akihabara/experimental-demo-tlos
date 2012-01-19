@@ -22,7 +22,7 @@ var Chest = function(x,y,id,animated,cont,contid,expi,td){
 
 		doPlayerAction:function(by) { // When used
 			if (this.questid!=null) tilemaps.queststatus[this.questid]=true;
-			audio.hitAudio("explosion");
+			AkihabaraAudio.hitAudio("explosion");
 			maingame.addSmoke(this); // Add a smoke spit
 			maingame.addBonus(this.x,this.y,this.content,this.contentid,this.expire); // Generate the content bonus
 			gbox.trashObject(this); // and disappear

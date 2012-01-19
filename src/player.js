@@ -43,7 +43,7 @@ var Player = function(){
 				if (maingame.hud.getValue("health","value")<=0) // If dead..
 					this.kill(); // Kill...
 				else { // Else is just hit
-					audio.hitAudio("hurt");
+					AkihabaraAudio.hitAudio("hurt");
 					this.accz=-5; // A little jump...
 					this.invultimer=30; // Stay invulnerable for a while...
 					this.stilltimer=10; // Stay still for a while...
@@ -53,7 +53,7 @@ var Player = function(){
 		},
 
 		kill:function(by){
-			 audio.hitAudio("die");
+			 AkihabaraAudio.hitAudio("die");
 			 this.frame=8;
 			 this.accz=-8;
 			 maingame.addSmoke(this,"flame-red");
@@ -62,7 +62,7 @@ var Player = function(){
 		},
 
 		attack:function() {
-			audio.hitAudio("sword");
+			AkihabaraAudio.hitAudio("sword");
 
 			this.stilltimer=10; // Stay still for a while
 			this.frame=(this.facing==topview.FACE_UP?9:(this.facing==topview.FACE_DOWN?10:11));
@@ -143,7 +143,7 @@ var Player = function(){
 					ahead.call="doPlayerAction";
 					if (!topview.callInColliding(this,ahead)) {// if any action is done
 						if (maingame.hud.getValue("weapon","frames").length>1)
-							audio.hitAudio("default-menu-option");
+							AkihabaraAudio.hitAudio("default-menu-option");
 						maingame.hud.addValue("weapon","value",1);
 					}
 				}
