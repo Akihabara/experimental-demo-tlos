@@ -135,9 +135,9 @@ var Player = function(){
 			topview.adjustZindex(this);
 			if (!this.stilltimer&&!this.killed) topview.setFrame(this); // set the right animation frame (if not attacking)
 			if (!this.stilltimer&&!this.isPaused&&!maingame.gameIsHold()&&!this.killed)
-				if (input.keyIsHit("a"))
+				if (AkihabaraInput.keyIsHit("a"))
 					this.attack();
-				else if (input.keyIsHit("b")) {
+				else if (AkihabaraInput.keyIsHit("b")) {
 					var ahead=topview.getAheadPixel(this,{distance:5});
 					ahead.group="walls";
 					ahead.call="doPlayerAction";
