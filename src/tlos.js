@@ -13,7 +13,7 @@ var tilemaps={}, dialogues={}, credits={};
 // In games like Zelda, object are alive also outside of the screen.
 // So, let's calculate a distance threshold from the camera
 function objectIsAlive(th) {
-	return trigo.getDistance(th,gbox.getCamera())<800;
+	return AkihabaraTrigo.getDistance(th,gbox.getCamera())<800;
 }
 
 function go() {
