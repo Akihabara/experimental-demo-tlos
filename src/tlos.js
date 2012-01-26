@@ -23,7 +23,7 @@ function go() {
 	// player, walls, bullets and foes are under z-index layer
 	gbox.setRenderOrder(["background",gbox.ZINDEX_LAYER,"sparks","foreground","gamecycle"]);
 
-	maingame=gamecycle.createMaingame("gamecycle","gamecycle");
+	maingame=AkihabaraGamecycle.createMaingame("gamecycle","gamecycle");
 
 	// Title intro
 	maingame.gameTitleIntroAnimation=function(reset) {
