@@ -86,7 +86,7 @@
 				},
 
 				mapActions:function() {
-					var pl=gbox.getObject("player","player");
+					var pl=AkihabaraGamebox.getObject("player","player");
 					var ontile=help.getTileInMap(pl.x+pl.colx+pl.colhw,pl.y+pl.coly+pl.colhh,tilemaps.map,tilemaps._defaultblock,"map");
 					if (!tilemaps.queststatus["floor2trapped"]&&!tilemaps.queststatus["floor2untrapped"]){ // the trap on floor 2
 						if (ontile==4) {
@@ -103,20 +103,20 @@
 						}
 					}
 					if (tilemaps.queststatus["floor2trapped"]&&!tilemaps.queststatus["floor2untrapped"]) {
-						if (!gbox.getObject("foes","third1")&&!gbox.getObject("foes","third2")&&!gbox.getObject("foes","third3")&&!gbox.getObject("foes","third4")) { // check them. If beaten...
-							gbox.getObject("walls","sidedoor").doOpen();
+						if (!AkihabaraGamebox.getObject("foes","third1")&&!AkihabaraGamebox.getObject("foes","third2")&&!AkihabaraGamebox.getObject("foes","third3")&&!AkihabaraGamebox.getObject("foes","third4")) { // check them. If beaten...
+							AkihabaraGamebox.getObject("walls","sidedoor").doOpen();
 							tilemaps.queststatus["floor2untrapped"]=true; // Set the quest as done...
 							maingame.addQuestClear(); // Arcade-ish message "QUEST CLEAR"!
 						}
 					}
 					if (tilemaps.queststatus["floor1eyeswitch"]&&!tilemaps.queststatus["bosskey"]&&!tilemaps.queststatus["_tmpbosskey"]) {
-						if (!gbox.getObject("foes","fifth1")&&!gbox.getObject("foes","fifth2")&&!gbox.getObject("foes","fifth3")&&!gbox.getObject("foes","fifth4")) { // check them. If beaten...
+						if (!AkihabaraGamebox.getObject("foes","fifth1")&&!AkihabaraGamebox.getObject("foes","fifth2")&&!AkihabaraGamebox.getObject("foes","fifth3")&&!AkihabaraGamebox.getObject("foes","fifth4")) { // check them. If beaten...
 							maingame.addQuestClear(); // Quest clear
 							maingame.addChest(5,7,null,true,"BOSSKEY","bosskey",0);
 							tilemaps.queststatus["_tmpbosskey"]=true;
 						}
 					}
-					var pl=gbox.getObject("player","player");
+					var pl=AkihabaraGamebox.getObject("player","player");
 					var ontile=help.getTileInMap(pl.x+pl.colx+pl.colhw,pl.y+pl.coly+pl.colhh,tilemaps.map,tilemaps._defaultblock,"map");
 					if (ontile==1) maingame.gotoLevel({level:"floor1",x:60,y:530,label:"Floor 1 stairs"});
 				},

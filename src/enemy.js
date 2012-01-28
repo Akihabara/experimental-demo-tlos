@@ -1,5 +1,5 @@
 var Enemy = function(id,type,x,y,cloud){
-	var td=gbox.getTiles(tilemaps.map.tileset);
+	var td=AkihabaraGamebox.getTiles(tilemaps.map.tileset);
 
 	var ob;
 	switch (type) {
@@ -32,9 +32,9 @@ var Enemy = function(id,type,x,y,cloud){
 				},
 
 				blit:function() {
-					if (gbox.objectIsVisible(this)) {
+					if (AkihabaraGamebox.objectIsVisible(this)) {
 						// Then the object. Notes that the y is y-z to have the "over the floor" effect.
-						gbox.blitTile(gbox.getBufferContext(),{tileset:this.tileset,tile:this.frame,dx:this.x,dy:this.y+this.z,camera:this.camera,fliph:this.fliph,flipv:this.flipv});
+						AkihabaraGamebox.blitTile(AkihabaraGamebox.getBufferContext(),{tileset:this.tileset,tile:this.frame,dx:this.x,dy:this.y+this.z,camera:this.camera,fliph:this.fliph,flipv:this.flipv});
 					}
 				}
 			};
@@ -73,11 +73,11 @@ var Enemy = function(id,type,x,y,cloud){
 					toys.generate.sparks.simple(this,"sparks",null,{animspeed:1,accx:-3,tileset:"flame-blue"});
 					toys.generate.sparks.simple(this,"sparks",null,{animspeed:1,accx:3,tileset:"flame-blue"});
 					if (help.random(0,2)==0) maingame.addBonus(this.x,this.y,"coin"); // reward with a coin, sometime
-					gbox.trashObject(this); // Vanish!
+					AkihabaraGamebox.trashObject(this); // Vanish!
 				},
 
 				attack:function() {
-				if (gbox.objectIsVisible(this)) AkihabaraAudio.hitAudio("hit"); // Only visible enemies plays audio: audio heard without seeying anything is confusing.
+				if (AkihabaraGamebox.objectIsVisible(this)) AkihabaraAudio.hitAudio("hit"); // Only visible enemies plays audio: audio heard without seeying anything is confusing.
 					this.stilltimer=10; // Stay still for a while
 					this.frame=(this.facing==topview.FACE_UP?0:(this.facing==topview.FACE_DOWN?3:4));
 					toys.generate.sparks.simple(this,"sparks",null,{animspeed:2,accy:-2,tileset:"flame-white"});
@@ -136,19 +136,19 @@ var Enemy = function(id,type,x,y,cloud){
 							topview.floorCollision(this); // Collision with the floor (for z-gravity)
 							topview.adjustZindex(this); // Set the right zindex
 							if (!this.stilltimer) topview.setFrame(this); // set the right animation frame (if not attacking - which has still frame)
-							var pl=gbox.getObject("player","player");
+							var pl=AkihabaraGamebox.getObject("player","player");
 							if (!pl.initialize&&pl.collisionEnabled()&&(topview.collides(this,pl))) pl.hitByBullet({power:1}); // If colliding with the player, hit with power 1
 						}
 					}
 				},
 
 				blit:function() {
-					if ((!this.killed)&&gbox.objectIsVisible(this)&&((this.invultimer%2)==0)) {
+					if ((!this.killed)&&AkihabaraGamebox.objectIsVisible(this)&&((this.invultimer%2)==0)) {
 						// Shadowed object. First draws the shadow...
-						gbox.blitTile(gbox.getBufferContext(),{tileset:this.shadow.tileset,tile:this.shadow.tile,dx:this.x,dy:this.y+this.h-gbox.getTiles(this.shadow.tileset).tileh+4,camera:this.camera});
+						AkihabaraGamebox.blitTile(AkihabaraGamebox.getBufferContext(),{tileset:this.shadow.tileset,tile:this.shadow.tile,dx:this.x,dy:this.y+this.h-AkihabaraGamebox.getTiles(this.shadow.tileset).tileh+4,camera:this.camera});
 
 						// Then the object. Notes that the y is y-z to have the "over the floor" effect.
-						gbox.blitTile(gbox.getBufferContext(),{tileset:this.tileset,tile:this.frame,dx:this.x,dy:this.y+this.z,camera:this.camera,fliph:this.fliph,flipv:this.flipv});
+						AkihabaraGamebox.blitTile(AkihabaraGamebox.getBufferContext(),{tileset:this.tileset,tile:this.frame,dx:this.x,dy:this.y+this.z,camera:this.camera,fliph:this.fliph,flipv:this.flipv});
 					 }
 				}
 			};

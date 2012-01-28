@@ -25,7 +25,7 @@ var Chest = function(x,y,id,animated,cont,contid,expi,td){
 			AkihabaraAudio.hitAudio("explosion");
 			maingame.addSmoke(this); // Add a smoke spit
 			maingame.addBonus(this.x,this.y,this.content,this.contentid,this.expire); // Generate the content bonus
-			gbox.trashObject(this); // and disappear
+			AkihabaraGamebox.trashObject(this); // and disappear
 		},
 
 		first:function() {
@@ -35,11 +35,11 @@ var Chest = function(x,y,id,animated,cont,contid,expi,td){
 			topview.adjustZindex(this); // Set the right zindex
 		},
 		blit:function() {
-			if (gbox.objectIsVisible(this)) {
+			if (AkihabaraGamebox.objectIsVisible(this)) {
 				// Shadowed object. First draws the shadow...
-				gbox.blitTile(gbox.getBufferContext(),{tileset:this.shadow.tileset,tile:this.shadow.tile,dx:this.x,dy:this.y+this.h-gbox.getTiles(this.shadow.tileset).tileh+4,camera:this.camera});
+				AkihabaraGamebox.blitTile(AkihabaraGamebox.getBufferContext(),{tileset:this.shadow.tileset,tile:this.shadow.tile,dx:this.x,dy:this.y+this.h-AkihabaraGamebox.getTiles(this.shadow.tileset).tileh+4,camera:this.camera});
 				// Then the object. Notes that the y is y-z to have the "over the floor" effect.
-				gbox.blitTile(gbox.getBufferContext(),{tileset:this.tileset,tile:this.frame,dx:this.x,dy:this.y+this.z,camera:this.camera,fliph:this.fliph,flipv:this.flipv});
+				AkihabaraGamebox.blitTile(AkihabaraGamebox.getBufferContext(),{tileset:this.tileset,tile:this.frame,dx:this.x,dy:this.y+this.z,camera:this.camera,fliph:this.fliph,flipv:this.flipv});
 			}
 		}
 	});

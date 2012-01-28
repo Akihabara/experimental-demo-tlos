@@ -13,15 +13,15 @@ var tilemaps={}, dialogues={}, credits={};
 // In games like Zelda, object are alive also outside of the screen.
 // So, let's calculate a distance threshold from the camera
 function objectIsAlive(th) {
-	return AkihabaraTrigo.getDistance(th,gbox.getCamera())<800;
+	return AkihabaraTrigo.getDistance(th,AkihabaraGamebox.getCamera())<800;
 }
 
 function go() {
-	gbox.setGroups(["background","player","bonus","foes","walls","playerbullets","foesbullets","sparks","foreground","gamecycle"]);
+	AkihabaraGamebox.setGroups(["background","player","bonus","foes","walls","playerbullets","foesbullets","sparks","foreground","gamecycle"]);
 	AkihabaraAudio.setAudioChannels({bgmusic:{volume:0.8},sfx:{volume:1.0}});
 
 	// player, walls, bullets and foes are under z-index layer
-	gbox.setRenderOrder(["background",gbox.ZINDEX_LAYER,"sparks","foreground","gamecycle"]);
+	AkihabaraGamebox.setRenderOrder(["background",AkihabaraGamebox.ZINDEX_LAYER,"sparks","foreground","gamecycle"]);
 
 	maingame=AkihabaraGamecycle.createMaingame("gamecycle","gamecycle");
 
@@ -31,8 +31,8 @@ function go() {
 			AkihabaraAudio.playAudio("default-music");
 			toys.resetToy(this,"rising");
 		} else {
-			gbox.blitFade(gbox.getBufferContext(),{alpha:1,color:"rgb(150,150,150)"});
-			toys.logos.rising(this,"rising",{image:"logo",x:gbox.getScreenHW()-gbox.getImage("logo").hwidth,y:20,speed:1,gapx:250,reflex:0.1,audioreach:"coin"});
+			AkihabaraGamebox.blitFade(AkihabaraGamebox.getBufferContext(),{alpha:1,color:"rgb(150,150,150)"});
+			toys.logos.rising(this,"rising",{image:"logo",x:AkihabaraGamebox.getScreenHW()-AkihabaraGamebox.getImage("logo").hwidth,y:20,speed:1,gapx:250,reflex:0.1,audioreach:"coin"});
 		}
 	},
 
@@ -47,8 +47,8 @@ function go() {
 		if (reset) {
 			toys.resetToy(this,"default-blinker");
 		} else {
-			gbox.blitFade(gbox.getBufferContext(),{alpha:1});
-			return toys.text.fixed(this,"default-blinker",gbox.getBufferContext(),{font:"big",text:maingame.getNextLevel().label,valign:gbox.ALIGN_MIDDLE,halign:gbox.ALIGN_CENTER,dx:0,dy:0,dw:gbox.getScreenW(),dh:gbox.getScreenH(),time:50});
+			AkihabaraGamebox.blitFade(AkihabaraGamebox.getBufferContext(),{alpha:1});
+			return toys.text.fixed(this,"default-blinker",AkihabaraGamebox.getBufferContext(),{font:"big",text:maingame.getNextLevel().label,valign:AkihabaraGamebox.ALIGN_MIDDLE,halign:AkihabaraGamebox.ALIGN_CENTER,dx:0,dy:0,dw:AkihabaraGamebox.getScreenW(),dh:AkihabaraGamebox.getScreenH(),time:50});
 		}
 	}
 
@@ -60,7 +60,7 @@ function go() {
 		if (reset) {
 			toys.resetToy(this,"intro-animation");
 		} else {
-			gbox.blitFade(gbox.getBufferContext(),{alpha:1});
+			AkihabaraGamebox.blitFade(AkihabaraGamebox.getBufferContext(),{alpha:1});
 			return toys.dialogue.render(this,"intro-animation",credits.titles);
 		}
 	}
@@ -73,12 +73,12 @@ function go() {
 	// Change level
 	maingame.changeLevel=function(level) {
 		// Cleanup the level
-		gbox.trashGroup("playerbullets");
-		gbox.trashGroup("foesbullets");
-		gbox.trashGroup("foes");
-		gbox.trashGroup("bonus");
-		gbox.trashGroup("walls");
-		gbox.purgeGarbage(); // Since we're starting, we can purge all now
+		AkihabaraGamebox.trashGroup("playerbullets");
+		AkihabaraGamebox.trashGroup("foesbullets");
+		AkihabaraGamebox.trashGroup("foes");
+		AkihabaraGamebox.trashGroup("bonus");
+		AkihabaraGamebox.trashGroup("walls");
+		AkihabaraGamebox.purgeGarbage(); // Since we're starting, we can purge all now
 
 		if (level==null)
 			level={level:"begin",x:300,y:270,introdialogue:true}; // First stage
@@ -92,13 +92,13 @@ function go() {
 		delete tilemaps.map;
 
 		// Here the map is loaded. During the load time, the game is still.
-		gbox.addBundle({
+		AkihabaraGamebox.addBundle({
 			file:"resources/bundle-map-"+level.level+".js",
 			onLoad:function(){ // This "onload" operation is triggered after everything is loaded.
 				help.finalizeTilemap(tilemaps.map); // Finalize the map into the bundle
-				gbox.createCanvas("tileslayer",{w:tilemaps.map.w,h:tilemaps.map.h}); // Prepare map's canvas
-				gbox.blitTilemap(gbox.getCanvasContext("tileslayer"),tilemaps.map); // Render map on the canvas
-				topview.spawn(gbox.getObject("player","player"),{x:level.x,y:level.y}); // Displace player
+				AkihabaraGamebox.createCanvas("tileslayer",{w:tilemaps.map.w,h:tilemaps.map.h}); // Prepare map's canvas
+				AkihabaraGamebox.blitTilemap(AkihabaraGamebox.getCanvasContext("tileslayer"),tilemaps.map); // Render map on the canvas
+				topview.spawn(AkihabaraGamebox.getObject("player","player"),{x:level.x,y:level.y}); // Displace player
 				tilemaps.map.addObjects(); // Initialize map
 				if (level.introdialogue) // Eventually starts intro dialogue.
 			maingame.startDialogue("intro"); // game introduction, if needed
@@ -111,28 +111,28 @@ function go() {
 		// Prepare hud
 		maingame.hud.setWidget("weapon",{widget:"radio",value:0,tileset:"items",frames:[0],dx:10,dy:10});
 		maingame.hud.setWidget("health",{widget:"symbols",tiles:[3,2,1,0],minvalue:0,maxvalue:20,value:12-(maingame.difficulty*4),maxshown:4,tileset:"hud",emptytile:4,dx:40,dy:10,gapx:20,gapy:0});
-		maingame.hud.setWidget("cash",{widget:"label",font:"small",value:0,minvalue:0,maxvalue:100,dx:gbox.getScreenW()-60,dy:gbox.getScreenH()-24,prepad:3,padwith:" ",clear:true});
-		maingame.hud.setWidget("SMALLKEY",{widget:"label",font:"small",value:0,minvalue:0,maxvalue:999,dx:gbox.getScreenW()-60,dy:gbox.getScreenH()-43,prepad:3,padwith:" ",clear:true});
-		maingame.hud.setWidget("BOSSKEY",{widget:"bool",value:0,tileset:"hud",frame:5,dx:gbox.getScreenW()-30,dy:gbox.getScreenH()-66}); // This is shown if value is true or >0
+		maingame.hud.setWidget("cash",{widget:"label",font:"small",value:0,minvalue:0,maxvalue:100,dx:AkihabaraGamebox.getScreenW()-60,dy:AkihabaraGamebox.getScreenH()-24,prepad:3,padwith:" ",clear:true});
+		maingame.hud.setWidget("SMALLKEY",{widget:"label",font:"small",value:0,minvalue:0,maxvalue:999,dx:AkihabaraGamebox.getScreenW()-60,dy:AkihabaraGamebox.getScreenH()-43,prepad:3,padwith:" ",clear:true});
+		maingame.hud.setWidget("BOSSKEY",{widget:"bool",value:0,tileset:"hud",frame:5,dx:AkihabaraGamebox.getScreenW()-30,dy:AkihabaraGamebox.getScreenH()-66}); // This is shown if value is true or >0
 
-		maingame.hud.setWidget("lblkey",{widget:"blit",value:6,tileset:"hud",dx:gbox.getScreenW()-30,dy:gbox.getScreenH()-50});
-		maingame.hud.setWidget("lblcoin",{widget:"blit",value:7,tileset:"hud",dx:gbox.getScreenW()-30,dy:gbox.getScreenH()-30});
+		maingame.hud.setWidget("lblkey",{widget:"blit",value:6,tileset:"hud",dx:AkihabaraGamebox.getScreenW()-30,dy:AkihabaraGamebox.getScreenH()-50});
+		maingame.hud.setWidget("lblcoin",{widget:"blit",value:7,tileset:"hud",dx:AkihabaraGamebox.getScreenW()-30,dy:AkihabaraGamebox.getScreenH()-30});
 
 		tilemaps={
 			_defaultblock:100, // The block that is over the borders (a wall)
 			queststatus:{} // Every step the player does, is marked here (opened doors, sections cleared etc)
 		};
 
-		gbox.addObject({
+		AkihabaraGamebox.addObject({
 			id:"bg",
 			group:"background",
 			blit:function() {
-				gbox.centerCamera(gbox.getObject("player","player"),{w:tilemaps.map.w,h:tilemaps.map.h});
-				gbox.blit(gbox.getBufferContext(),gbox.getCanvas("tileslayer"),{dx:0,dy:0,dw:gbox.getScreenW(),dh:gbox.getScreenH(),sourcecamera:true});
+				AkihabaraGamebox.centerCamera(AkihabaraGamebox.getObject("player","player"),{w:tilemaps.map.w,h:tilemaps.map.h});
+				AkihabaraGamebox.blit(AkihabaraGamebox.getBufferContext(),AkihabaraGamebox.getCanvas("tileslayer"),{dx:0,dy:0,dw:AkihabaraGamebox.getScreenW(),dh:AkihabaraGamebox.getScreenH(),sourcecamera:true});
 			}
 		});
 
-		gbox.addObject(new Player());
+		AkihabaraGamebox.addObject(new Player());
 	};
 
 	// Add a bonus item. It jumps a while and then disappear.
@@ -146,14 +146,14 @@ function go() {
 			case "BOSSKEY": {frames={ standdown:{ speed:3, frames:[10,11] }  }; break } // Blinking small key
 		}
 
-		gbox.addObject(new Bonus(x,y,type,id,expire, frames));
+		AkihabaraGamebox.addObject(new Bonus(x,y,type,id,expire, frames));
 	}
 
 	// Changes a tile in the map. It also adds smoke if asked.
 	maingame.setTileInMap=function(x,y,tile,smoke) {
-		help.setTileInMap(gbox.getCanvasContext("tileslayer"),tilemaps.map,x,y,tile);
+		help.setTileInMap(AkihabaraGamebox.getCanvasContext("tileslayer"),tilemaps.map,x,y,tile);
 		if (smoke) {
-			var ts=gbox.getTiles(tilemaps.map.tileset);
+			var ts=AkihabaraGamebox.getTiles(tilemaps.map.tileset);
 			AkihabaraAudio.hitAudio("explosion"); // Switch sound
 			maingame.addSmoke({x:x*ts.tilew,y:y*ts.tilew,h:ts.tileh,w:ts.tilew,hh:ts.tilehh,hw:ts.tilehw,camera:true});
 		}
@@ -162,7 +162,7 @@ function go() {
 	// Add the "QUEST CLEAR" message
 	maingame.addQuestClear=function(msg) {
 		if (msg==null) AkihabaraAudio.hitAudio("default-menu-confirm"); // Switch sound
-		toys.generate.sparks.popupText(gbox.getObject("player","player"),"sparks",null,{font:"big",jump:6,text:(msg==null?"QUEST CLEAR!":msg),keep:20});
+		toys.generate.sparks.popupText(AkihabaraGamebox.getObject("player","player"),"sparks",null,{font:"big",jump:6,text:(msg==null?"QUEST CLEAR!":msg),keep:20});
 	}
 
 	// Add spreading smoke on an object
@@ -176,8 +176,8 @@ function go() {
 
 	// Add a tresaure chest
 	maingame.addChest=function(x,y,id,animated,cont,contid,expi) {
-		var td=gbox.getTiles(tilemaps.map.tileset);
-		var ob=gbox.addObject(new Chest(x,y,id,animated,cont,contid,expi,td));
+		var td=AkihabaraGamebox.getTiles(tilemaps.map.tileset);
+		var ob=AkihabaraGamebox.addObject(new Chest(x,y,id,animated,cont,contid,expi,td));
 		if (animated) maingame.addSmoke(ob);
 	}
 
@@ -212,13 +212,13 @@ function go() {
 	// Starts a dialogue
 	maingame.startDialogue=function(id,pause) {
 		if ((maingame.difficulty==0)||(!dialogues[id].istutorial)) { // dialogues marked as tutorial are shown only on easy. This flag is in the dialogue itself.
-			gbox.addObject({
+			AkihabaraGamebox.addObject({
 				group:"foreground",
 				id:"dialogue",
 				dialogueToRead:id,
 				pause:1+(pause==null?0:1), // Pauses a dialog for a while. Is important to wait a frame very time to cancel the last "b" key press (for interacting, for example)
 				initialize:function() {
-					gbox.getObject("player","player").doPause(true); // First pause the player
+					AkihabaraGamebox.getObject("player","player").doPause(true); // First pause the player
 				},
 				blit:function() {
 					if (this.pause)
@@ -227,8 +227,8 @@ function go() {
 						if (dialogues[this.dialogueToRead].endgame) // If the dialogue is marked by "endgame"...
 							maingame.gameIsCompleted(); // The game is completed
 						else
-							gbox.getObject("player","player").doPause(false); // Unpause the player
-							gbox.trashObject(this); // Trash the dialogue itself.
+							AkihabaraGamebox.getObject("player","player").doPause(false); // Unpause the player
+							AkihabaraGamebox.trashObject(this); // Trash the dialogue itself.
 						}
 					}
 			});
@@ -237,7 +237,7 @@ function go() {
 
 	// Add a still object. Are sprites that supports the z-index (houses, trees.) You can walk around these objects
 	maingame.addBlock=function(x,y,tileset,frame) {
-		gbox.addObject({
+		AkihabaraGamebox.addObject({
 			group:"walls",
 			tileset:tileset,
 			zindex:0, // Needed for zindexed objects
@@ -250,9 +250,9 @@ function go() {
 			},
 
 			blit:function() {
-				if (gbox.objectIsVisible(this)) {
+				if (AkihabaraGamebox.objectIsVisible(this)) {
 					// Then the object. Notes that the y is y-z to have the "over the floor" effect.
-					gbox.blitTile(gbox.getBufferContext(),{tileset:this.tileset,tile:this.frame,dx:this.x,dy:this.y+this.z,camera:this.camera,fliph:this.fliph,flipv:this.flipv});
+					AkihabaraGamebox.blitTile(AkihabaraGamebox.getBufferContext(),{tileset:this.tileset,tile:this.frame,dx:this.x,dy:this.y+this.z,camera:this.camera,fliph:this.fliph,flipv:this.flipv});
 				}
 			}
 		});
@@ -261,28 +261,28 @@ function go() {
 	// Add a npc (Not Playing Charachter)
 	maingame.addNpc=function(x,y,still,dialogue,questid,talking,silence) {
 		// An easy way to create an NPC.
-		gbox.addObject(new Npc(x,y,still,dialogue,questid,talking,silence));
+		AkihabaraGamebox.addObject(new Npc(x,y,still,dialogue,questid,talking,silence));
 	}
 
 	// Add an enemy
 	maingame.addEnemy=function(id,type,x,y,cloud) {
-		var enemy=gbox.addObject(new Enemy(id,type,x,y,cloud));
+		var enemy=AkihabaraGamebox.addObject(new Enemy(id,type,x,y,cloud));
 		if (cloud) maingame.addSmoke(enemy,"flame-blue");
 		return enemy;
 	}
-	gbox.go();
+	AkihabaraGamebox.go();
 }
 
 // BOOTSTRAP
-gbox.onLoad(function () {
+AkihabaraGamebox.onLoad(function () {
 	help.akihabaraInit({title:"The Legend Of Sadness",splash:{footnotes:["Musics by: Greenleo, Graulund, Robert Jaret.","Full credits on ending title."]}});
 
 	// We are not going to use faces for dialogues
-	noface={ noone:{ x:10, y:170,box:{x:0,y:160,w:gbox.getScreenW(),h:60,alpha:0.5} } };
+	noface={ noone:{ x:10, y:170,box:{x:0,y:160,w:AkihabaraGamebox.getScreenW(),h:60,alpha:0.5} } };
 
 	audioserver="resources/audio/"
 
-	gbox.addBundle({file:"resources/bundle.js"}); // Audio, sprites, fonts etc. are loaded here now. Cleaner code! Btw you can still load resources from the code, like in Capman.
+	AkihabaraGamebox.addBundle({file:"resources/bundle.js"}); // Audio, sprites, fonts etc. are loaded here now. Cleaner code! Btw you can still load resources from the code, like in Capman.
 
-	gbox.loadAll(go);
+	AkihabaraGamebox.loadAll(go);
 }, false);

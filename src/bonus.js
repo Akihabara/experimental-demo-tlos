@@ -22,7 +22,7 @@ var Bonus = function(x,y,type,id,expire,frames){
 			if ((this.expiretime!=null)&&this.expiretime) this.expiretime--;
 			if (this.unpicktime) this.unpicktime--;
 			if (this.expiretime===0) {
-				gbox.trashObject(this);
+				AkihabaraGamebox.trashObject(this);
 			} else if (objectIsAlive(this)) {
 				// Counter
 				this.counter=(this.counter+1)%60;
@@ -34,7 +34,7 @@ var Bonus = function(x,y,type,id,expire,frames){
 				topview.adjustZindex(this); // Set the right zindex
 				topview.setFrame(this); // set the right animation frame (if not attacking - which has still frame)
 				if (!this.unpicktime) {
-					var pl=gbox.getObject("player","player");
+					var pl=AkihabaraGamebox.getObject("player","player");
 					if (pl.collisionEnabled()&&(topview.collides(this,pl))) {
 						AkihabaraAudio.hitAudio("coin");
 
@@ -63,18 +63,18 @@ var Bonus = function(x,y,type,id,expire,frames){
 								break;
 							}
 						}
-						gbox.trashObject(this);
+						AkihabaraGamebox.trashObject(this);
 					}
 				}
 			}
 		},
 		blit:function() {
-			if (gbox.objectIsVisible(this)) {
+			if (AkihabaraGamebox.objectIsVisible(this)) {
 				// Shadowed object. First draws the shadow...
-				gbox.blitTile(gbox.getBufferContext(),{tileset:this.shadow.tileset,tile:this.shadow.tile,dx:this.x,dy:this.y+this.h-gbox.getTiles(this.shadow.tileset).tileh+4,camera:this.camera});
+				AkihabaraGamebox.blitTile(AkihabaraGamebox.getBufferContext(),{tileset:this.shadow.tileset,tile:this.shadow.tile,dx:this.x,dy:this.y+this.h-AkihabaraGamebox.getTiles(this.shadow.tileset).tileh+4,camera:this.camera});
 				if ((this.expiretime>30)||((this.expiretime<30)&&(this.expiretime%2==0)))
 					// Then the object. Notes that the y is y-z to have the "over the floor" effect.
-					gbox.blitTile(gbox.getBufferContext(),{tileset:this.tileset,tile:this.frame,dx:this.x,dy:this.y+this.z,camera:this.camera,fliph:this.fliph,flipv:this.flipv});
+					AkihabaraGamebox.blitTile(AkihabaraGamebox.getBufferContext(),{tileset:this.tileset,tile:this.frame,dx:this.x,dy:this.y+this.z,camera:this.camera,fliph:this.fliph,flipv:this.flipv});
 			}
 		}
 	});

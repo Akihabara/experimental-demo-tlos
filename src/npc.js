@@ -30,7 +30,7 @@ var Npc = function(x,y,still,dialogue,questid,talking,silence){
 
 			if (this.iamTalking) {
 				this.frame=help.decideFrame(this.counter,this.frames.talking);
-				if (!gbox.getObject("foreground","dialogue")) {// Check if the dialogue ended
+				if (!AkihabaraGamebox.getObject("foreground","dialogue")) {// Check if the dialogue ended
 					this.iamTalking=false; // Stop talking
 					if ((this.questid!=null)&&(!tilemaps.queststatus[this.questid])) {
 						tilemaps.queststatus[this.questid]=true; // If related to a quest, the quest is marked as done
@@ -42,11 +42,11 @@ var Npc = function(x,y,still,dialogue,questid,talking,silence){
 		},
 
 		blit:function() {
-			if (gbox.objectIsVisible(this)) {
+			if (AkihabaraGamebox.objectIsVisible(this)) {
 				// Shadowed object. First draws the shadow...
-				gbox.blitTile(gbox.getBufferContext(),{tileset:this.shadow.tileset,tile:this.shadow.tile,dx:this.x,dy:this.y+this.h-gbox.getTiles(this.shadow.tileset).tileh+4,camera:this.camera});
+				AkihabaraGamebox.blitTile(AkihabaraGamebox.getBufferContext(),{tileset:this.shadow.tileset,tile:this.shadow.tile,dx:this.x,dy:this.y+this.h-AkihabaraGamebox.getTiles(this.shadow.tileset).tileh+4,camera:this.camera});
 				// Then the object. Notes that the y is y-z to have the "over the floor" effect.
-				gbox.blitTile(gbox.getBufferContext(),{tileset:this.tileset,tile:this.frame,dx:this.x,dy:this.y+this.z,camera:this.camera,fliph:this.fliph,flipv:this.flipv});
+				AkihabaraGamebox.blitTile(AkihabaraGamebox.getBufferContext(),{tileset:this.tileset,tile:this.frame,dx:this.x,dy:this.y+this.z,camera:this.camera,fliph:this.fliph,flipv:this.flipv});
 			 }
 		 }
 	});

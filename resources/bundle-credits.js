@@ -7,7 +7,7 @@
 				{
 					speed:2,
 					spacing:2,
-					push:gbox.getScreenHH(),
+					push:AkihabaraGamebox.getScreenHH(),
 					audiomusic:"ending",
 					scroller:[
 						"THE LEGEND OF SADNESS",
