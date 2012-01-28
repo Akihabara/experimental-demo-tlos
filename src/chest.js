@@ -12,7 +12,7 @@ var Chest = function(x,y,id,animated,cont,contid,expi,td){
 		expire:expi,
 
 		initialize:function() {
-			topview.initialize(this,{
+			AkihabaraTopview.initialize(this,{
 				shadow:{tileset:"shadows",tile:0},
 				frames:{
 					standdown:{ speed:1, frames:[0] }
@@ -29,10 +29,10 @@ var Chest = function(x,y,id,animated,cont,contid,expi,td){
 		},
 
 		first:function() {
-			topview.handleGravity(this); // z-gravity
-			topview.applyGravity(this); // z-gravity
-			topview.floorCollision(this,{bounce:2,audiobounce:"beep"}); // Collision with the floor (for z-gravity)
-			topview.adjustZindex(this); // Set the right zindex
+			AkihabaraTopview.handleGravity(this); // z-gravity
+			AkihabaraTopview.applyGravity(this); // z-gravity
+			AkihabaraTopview.floorCollision(this,{bounce:2,audiobounce:"beep"}); // Collision with the floor (for z-gravity)
+			AkihabaraTopview.adjustZindex(this); // Set the right zindex
 		},
 		blit:function() {
 			if (AkihabaraGamebox.objectIsVisible(this)) {

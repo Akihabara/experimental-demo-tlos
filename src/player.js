@@ -13,7 +13,7 @@ var Player = function(){
 		},
 
 		initialize:function() {
-			topview.initialize(this,{
+			AkihabaraTopview.initialize(this,{
 				haspushing:true,
 				shadow:{tileset:"shadows",tile:0},
 				frames:{
@@ -65,11 +65,11 @@ var Player = function(){
 			AkihabaraAudio.hitAudio("sword");
 
 			this.stilltimer=10; // Stay still for a while
-			this.frame=(this.facing==topview.FACE_UP?9:(this.facing==topview.FACE_DOWN?10:11));
+			this.frame=(this.facing==AkihabaraTopview.FACE_UP?9:(this.facing==AkihabaraTopview.FACE_DOWN?10:11));
 
 			switch (maingame.hud.getValue("weapon","value")) {
 				case 0: { // Sword
-					topview.fireBullet("playerbullets",null,{
+					AkihabaraTopview.fireBullet("playerbullets",null,{
 						fullhit:true,
 						collidegroup:"foes",
 						undestructable:true, // Custom attribute. Is not destroyed by the hitted object.
@@ -77,18 +77,18 @@ var Player = function(){
 						from:this,
 						sidex:this.facing,
 						sidey:this.facing,
-						tileset:((this.facing==topview.FACE_LEFT)||(this.facing==topview.FACE_RIGHT)?"lefthit":"uphit"),
+						tileset:((this.facing==AkihabaraTopview.FACE_LEFT)||(this.facing==AkihabaraTopview.FACE_RIGHT)?"lefthit":"uphit"),
 						frames:{speed:1,frames:[0,1,2,3]},
 						duration:4,
 						acc:5,
-						fliph:(this.facing==topview.FACE_RIGHT),
-						flipv:(this.facing==topview.FACE_DOWN),
-						angle:topview.FACES_ANGLE[this.facing]
+						fliph:(this.facing==AkihabaraTopview.FACE_RIGHT),
+						flipv:(this.facing==AkihabaraTopview.FACE_DOWN),
+						angle:AkihabaraTopview.FACES_ANGLE[this.facing]
 					});
 					break;
 				}
 				case 1: { // Arrows
-					topview.fireBullet("playerbullets",null,{
+					AkihabaraTopview.fireBullet("playerbullets",null,{
 						_canhitswitch:true, // Arrows can hit switchs and turn them on
 						fullhit:true,
 						collidegroup:"foes",
@@ -100,12 +100,12 @@ var Player = function(){
 						from:this,
 						sidex:this.facing,
 						sidey:this.facing,
-						tileset:((this.facing==topview.FACE_LEFT)||(this.facing==topview.FACE_RIGHT)?"leftarrow":"uparrow"),
+						tileset:((this.facing==AkihabaraTopview.FACE_LEFT)||(this.facing==AkihabaraTopview.FACE_RIGHT)?"leftarrow":"uparrow"),
 						frames:{speed:1,frames:[0,1]},
 						acc:5,
-						fliph:(this.facing==topview.FACE_RIGHT),
-						flipv:(this.facing==topview.FACE_DOWN),
-						angle:topview.FACES_ANGLE[this.facing],
+						fliph:(this.facing==AkihabaraTopview.FACE_RIGHT),
+						flipv:(this.facing==AkihabaraTopview.FACE_DOWN),
+						angle:AkihabaraTopview.FACES_ANGLE[this.facing],
 						spritewalls:"walls",
 						gapy:8 // Avoid wall collision on start
 					});
@@ -121,27 +121,27 @@ var Player = function(){
 			// Counter
 			this.counter=(this.counter+1)%60;
 			if (this.stilltimer||maingame.gameIsHold()||this.isPaused||this.killed)
-				topview.controlKeys(this,{}); // Stays still. No key is moving! :)
+				AkihabaraTopview.controlKeys(this,{}); // Stays still. No key is moving! :)
 			else
-				topview.controlKeys(this,{left:"left",right:"right",up:"up",down:"down"}); // Moves (if not attacking)
+				AkihabaraTopview.controlKeys(this,{left:"left",right:"right",up:"up",down:"down"}); // Moves (if not attacking)
 
-			topview.handleAccellerations(this);
-			topview.handleGravity(this); // z-gravity
-			topview.applyForces(this); // Apply forces
-			topview.applyGravity(this); // z-gravity
-			topview.tileCollision(this,tilemaps.map,"map",tilemaps._defaultblock); // tile collisions
-			topview.floorCollision(this); // Collision with the floor (for z-gravity)
-			topview.spritewallCollision(this,{group:"walls"}); // Doors and tresaure chests are sprites that acts like a wall.
-			topview.adjustZindex(this);
-			if (!this.stilltimer&&!this.killed) topview.setFrame(this); // set the right animation frame (if not attacking)
+			AkihabaraTopview.handleAccellerations(this);
+			AkihabaraTopview.handleGravity(this); // z-gravity
+			AkihabaraTopview.applyForces(this); // Apply forces
+			AkihabaraTopview.applyGravity(this); // z-gravity
+			AkihabaraTopview.tileCollision(this,tilemaps.map,"map",tilemaps._defaultblock); // tile collisions
+			AkihabaraTopview.floorCollision(this); // Collision with the floor (for z-gravity)
+			AkihabaraTopview.spritewallCollision(this,{group:"walls"}); // Doors and tresaure chests are sprites that acts like a wall.
+			AkihabaraTopview.adjustZindex(this);
+			if (!this.stilltimer&&!this.killed) AkihabaraTopview.setFrame(this); // set the right animation frame (if not attacking)
 			if (!this.stilltimer&&!this.isPaused&&!maingame.gameIsHold()&&!this.killed)
 				if (AkihabaraInput.keyIsHit("a"))
 					this.attack();
 				else if (AkihabaraInput.keyIsHit("b")) {
-					var ahead=topview.getAheadPixel(this,{distance:5});
+					var ahead=AkihabaraTopview.getAheadPixel(this,{distance:5});
 					ahead.group="walls";
 					ahead.call="doPlayerAction";
-					if (!topview.callInColliding(this,ahead)) {// if any action is done
+					if (!AkihabaraTopview.callInColliding(this,ahead)) {// if any action is done
 						if (maingame.hud.getValue("weapon","frames").length>1)
 							AkihabaraAudio.hitAudio("default-menu-option");
 						maingame.hud.addValue("weapon","value",1);

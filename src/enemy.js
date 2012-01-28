@@ -20,7 +20,7 @@ var Enemy = function(id,type,x,y,cloud){
 				},
 
 				initialize:function() {
-					topview.initialize(this); // Any particular initialization. Just the auto z-index
+					AkihabaraTopview.initialize(this); // Any particular initialization. Just the auto z-index
 				},
 
 				hitByBullet:function(by) {
@@ -52,7 +52,7 @@ var Enemy = function(id,type,x,y,cloud){
 				y:y*td.tileh,
 
 				initialize:function() {
-					topview.initialize(this,{
+					AkihabaraTopview.initialize(this,{
 						health:3, // Custom attribute. Indicates the strength.
 						shadow:{tileset:"shadows",tile:0},
 						frames:{
@@ -79,9 +79,9 @@ var Enemy = function(id,type,x,y,cloud){
 				attack:function() {
 				if (AkihabaraGamebox.objectIsVisible(this)) AkihabaraAudio.hitAudio("hit"); // Only visible enemies plays audio: audio heard without seeying anything is confusing.
 					this.stilltimer=10; // Stay still for a while
-					this.frame=(this.facing==topview.FACE_UP?0:(this.facing==topview.FACE_DOWN?3:4));
+					this.frame=(this.facing==AkihabaraTopview.FACE_UP?0:(this.facing==AkihabaraTopview.FACE_DOWN?3:4));
 					AkihabaraToys.generate.sparks.simple(this,"sparks",null,{animspeed:2,accy:-2,tileset:"flame-white"});
-					topview.fireBullet("foesbullets",null,{
+					AkihabaraTopview.fireBullet("foesbullets",null,{
 						fullhit:true,
 						collidegroup:"player",
 						map:tilemaps.map, // Map is specified, since collides with walls
@@ -95,9 +95,9 @@ var Enemy = function(id,type,x,y,cloud){
 						tileset:"bullet-black",
 						frames:{speed:1,frames:[0]},
 						acc:5,
-						fliph:(this.facing==topview.FACE_RIGHT),
-						flipv:(this.facing==topview.FACE_DOWN),
-						angle:topview.FACES_ANGLE[this.facing],
+						fliph:(this.facing==AkihabaraTopview.FACE_RIGHT),
+						flipv:(this.facing==AkihabaraTopview.FACE_DOWN),
+						angle:AkihabaraTopview.FACES_ANGLE[this.facing],
 						spritewalls:"walls",
 						gapy:7 // Avoid wall collision on start
 					});
@@ -125,19 +125,19 @@ var Enemy = function(id,type,x,y,cloud){
 						// Counter
 						this.counter=(this.counter+1)%60;
 						if (!this.killed) {
-							if (!this.stilltimer) topview.wander(this,tilemaps.map,"map",100,{speed:1,minstep:20,steprange:150}); // tile collisions
+							if (!this.stilltimer) AkihabaraTopview.wander(this,tilemaps.map,"map",100,{speed:1,minstep:20,steprange:150}); // tile collisions
 							if ((!this.stilltimer)&&AkihabaraToys.timer.randomly(this,"fire",{base:50,range:50})) this.attack(); // Fires randomly
-							topview.handleAccellerations(this);
-							topview.handleGravity(this); // z-gravity
-							if (!this.stilltimer) topview.applyForces(this); // Apply forces
-							topview.applyGravity(this); // z-gravity
-							topview.tileCollision(this,tilemaps.map,"map",100); // tile collisions
-							topview.spritewallCollision(this,{group:"walls"}); // walls collisions
-							topview.floorCollision(this); // Collision with the floor (for z-gravity)
-							topview.adjustZindex(this); // Set the right zindex
-							if (!this.stilltimer) topview.setFrame(this); // set the right animation frame (if not attacking - which has still frame)
+							AkihabaraTopview.handleAccellerations(this);
+							AkihabaraTopview.handleGravity(this); // z-gravity
+							if (!this.stilltimer) AkihabaraTopview.applyForces(this); // Apply forces
+							AkihabaraTopview.applyGravity(this); // z-gravity
+							AkihabaraTopview.tileCollision(this,tilemaps.map,"map",100); // tile collisions
+							AkihabaraTopview.spritewallCollision(this,{group:"walls"}); // walls collisions
+							AkihabaraTopview.floorCollision(this); // Collision with the floor (for z-gravity)
+							AkihabaraTopview.adjustZindex(this); // Set the right zindex
+							if (!this.stilltimer) AkihabaraTopview.setFrame(this); // set the right animation frame (if not attacking - which has still frame)
 							var pl=AkihabaraGamebox.getObject("player","player");
-							if (!pl.initialize&&pl.collisionEnabled()&&(topview.collides(this,pl))) pl.hitByBullet({power:1}); // If colliding with the player, hit with power 1
+							if (!pl.initialize&&pl.collisionEnabled()&&(AkihabaraTopview.collides(this,pl))) pl.hitByBullet({power:1}); // If colliding with the player, hit with power 1
 						}
 					}
 				},

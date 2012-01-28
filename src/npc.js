@@ -22,7 +22,7 @@ var Npc = function(x,y,still,dialogue,questid,talking,silence){
 		},
 
 		initialize:function() {
-			topview.initialize(this); // Any particular initialization. Just the auto z-index
+			AkihabaraTopview.initialize(this); // Any particular initialization. Just the auto z-index
 		},
 
 		first:function(by) {

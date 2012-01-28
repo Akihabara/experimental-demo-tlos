@@ -13,7 +13,7 @@ var Bonus = function(x,y,type,id,expire,frames){
 		frames:frames, // You can specify attributes outside from the initialization. Are kept instead the default one.
 
 		initialize:function() {
-			topview.initialize(this,{
+			AkihabaraTopview.initialize(this,{
 				shadow:{tileset:"shadows",tile:0}
 			});
 		},
@@ -26,16 +26,16 @@ var Bonus = function(x,y,type,id,expire,frames){
 			} else if (objectIsAlive(this)) {
 				// Counter
 				this.counter=(this.counter+1)%60;
-				topview.handleAccellerations(this);
-				topview.handleGravity(this); // z-gravity
-				topview.applyForces(this); // Apply forces
-				topview.applyGravity(this); // z-gravity
-				topview.floorCollision(this,{bounce:2,audiobounce:"beep"}); // Collision with the floor (for z-gravity)
-				topview.adjustZindex(this); // Set the right zindex
-				topview.setFrame(this); // set the right animation frame (if not attacking - which has still frame)
+				AkihabaraTopview.handleAccellerations(this);
+				AkihabaraTopview.handleGravity(this); // z-gravity
+				AkihabaraTopview.applyForces(this); // Apply forces
+				AkihabaraTopview.applyGravity(this); // z-gravity
+				AkihabaraTopview.floorCollision(this,{bounce:2,audiobounce:"beep"}); // Collision with the floor (for z-gravity)
+				AkihabaraTopview.adjustZindex(this); // Set the right zindex
+				AkihabaraTopview.setFrame(this); // set the right animation frame (if not attacking - which has still frame)
 				if (!this.unpicktime) {
 					var pl=AkihabaraGamebox.getObject("player","player");
-					if (pl.collisionEnabled()&&(topview.collides(this,pl))) {
+					if (pl.collisionEnabled()&&(AkihabaraTopview.collides(this,pl))) {
 						AkihabaraAudio.hitAudio("coin");
 
 						switch (this.bonustype) {

@@ -98,7 +98,7 @@ function go() {
 				AkihabaraHelp.finalizeTilemap(tilemaps.map); // Finalize the map into the bundle
 				AkihabaraGamebox.createCanvas("tileslayer",{w:tilemaps.map.w,h:tilemaps.map.h}); // Prepare map's canvas
 				AkihabaraGamebox.blitTilemap(AkihabaraGamebox.getCanvasContext("tileslayer"),tilemaps.map); // Render map on the canvas
-				topview.spawn(AkihabaraGamebox.getObject("player","player"),{x:level.x,y:level.y}); // Displace player
+				AkihabaraTopview.spawn(AkihabaraGamebox.getObject("player","player"),{x:level.x,y:level.y}); // Displace player
 				tilemaps.map.addObjects(); // Initialize map
 				if (level.introdialogue) // Eventually starts intro dialogue.
 			maingame.startDialogue("intro"); // game introduction, if needed
@@ -183,7 +183,7 @@ function go() {
 
 	// Add a door
 	maingame.addDoor=function(id,tileset,x,y,animated,openwith) { // A door constructor. These doors opens shaking and smoking, a la Zelda
-		var door=topview.makedoor("walls",id,tilemaps.map,{whileMoving:function(){
+		var door=AkihabaraTopview.makedoor("walls",id,tilemaps.map,{whileMoving:function(){
 			this.x+=(this.opencounter%2==0?-1:1)
 			if (this.opencounter%5==0) {
 				AkihabaraToys.generate.sparks.simple(this,"sparks",null,{alpha:0.7,gapy:this.hh,frames:{speed:4,frames:[3,2,1,2,3]},accy:-AkihabaraHelp.random(0,4),tileset:"flame-white"});
@@ -246,7 +246,7 @@ function go() {
 			frame:frame,
 
 			initialize:function() {
-				topview.initialize(this); // Any particular initialization. Just the auto z-index
+				AkihabaraTopview.initialize(this); // Any particular initialization. Just the auto z-index
 			},
 
 			blit:function() {
