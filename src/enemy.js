@@ -69,10 +69,10 @@ var Enemy = function(id,type,x,y,cloud){
 				},
 				kill:function(by){
 					AkihabaraAudio.hitAudio("hurt");
-					toys.generate.sparks.simple(this,"sparks",null,{animspeed:2,accy:-3,tileset:"flame-blue"});
-					toys.generate.sparks.simple(this,"sparks",null,{animspeed:1,accx:-3,tileset:"flame-blue"});
-					toys.generate.sparks.simple(this,"sparks",null,{animspeed:1,accx:3,tileset:"flame-blue"});
-					if (help.random(0,2)==0) maingame.addBonus(this.x,this.y,"coin"); // reward with a coin, sometime
+					AkihabaraToys.generate.sparks.simple(this,"sparks",null,{animspeed:2,accy:-3,tileset:"flame-blue"});
+					AkihabaraToys.generate.sparks.simple(this,"sparks",null,{animspeed:1,accx:-3,tileset:"flame-blue"});
+					AkihabaraToys.generate.sparks.simple(this,"sparks",null,{animspeed:1,accx:3,tileset:"flame-blue"});
+					if (AkihabaraHelp.random(0,2)==0) maingame.addBonus(this.x,this.y,"coin"); // reward with a coin, sometime
 					AkihabaraGamebox.trashObject(this); // Vanish!
 				},
 
@@ -80,7 +80,7 @@ var Enemy = function(id,type,x,y,cloud){
 				if (AkihabaraGamebox.objectIsVisible(this)) AkihabaraAudio.hitAudio("hit"); // Only visible enemies plays audio: audio heard without seeying anything is confusing.
 					this.stilltimer=10; // Stay still for a while
 					this.frame=(this.facing==topview.FACE_UP?0:(this.facing==topview.FACE_DOWN?3:4));
-					toys.generate.sparks.simple(this,"sparks",null,{animspeed:2,accy:-2,tileset:"flame-white"});
+					AkihabaraToys.generate.sparks.simple(this,"sparks",null,{animspeed:2,accy:-2,tileset:"flame-white"});
 					topview.fireBullet("foesbullets",null,{
 						fullhit:true,
 						collidegroup:"player",
@@ -126,7 +126,7 @@ var Enemy = function(id,type,x,y,cloud){
 						this.counter=(this.counter+1)%60;
 						if (!this.killed) {
 							if (!this.stilltimer) topview.wander(this,tilemaps.map,"map",100,{speed:1,minstep:20,steprange:150}); // tile collisions
-							if ((!this.stilltimer)&&toys.timer.randomly(this,"fire",{base:50,range:50})) this.attack(); // Fires randomly
+							if ((!this.stilltimer)&&AkihabaraToys.timer.randomly(this,"fire",{base:50,range:50})) this.attack(); // Fires randomly
 							topview.handleAccellerations(this);
 							topview.handleGravity(this); // z-gravity
 							if (!this.stilltimer) topview.applyForces(this); // Apply forces

@@ -127,7 +127,7 @@
 					}
 
 					var pl=AkihabaraGamebox.getObject("player","player");
-					var ontile=help.getTileInMap(pl.x+pl.colx+pl.colhw,pl.y+pl.coly+pl.colhh,tilemaps.map,tilemaps._defaultblock,"map");
+					var ontile=AkihabaraHelp.getTileInMap(pl.x+pl.colx+pl.colhw,pl.y+pl.coly+pl.colhh,tilemaps.map,tilemaps._defaultblock,"map");
 					if (ontile==2) maingame.gotoLevel({level:"floor2",x:90,y:240,label:"Floor 2 entrance"});
 					if (ontile==5) maingame.gotoLevel({level:"begin",x:330,y:90,label:"Kariko village's cave"});
 				 },

@@ -87,7 +87,7 @@
 
 				mapActions:function() {
 					var pl=AkihabaraGamebox.getObject("player","player");
-					var ontile=help.getTileInMap(pl.x+pl.colx+pl.colhw,pl.y+pl.coly+pl.colhh,tilemaps.map,tilemaps._defaultblock,"map");
+					var ontile=AkihabaraHelp.getTileInMap(pl.x+pl.colx+pl.colhw,pl.y+pl.coly+pl.colhh,tilemaps.map,tilemaps._defaultblock,"map");
 					if (!tilemaps.queststatus["floor2trapped"]&&!tilemaps.queststatus["floor2untrapped"]){ // the trap on floor 2
 						if (ontile==4) {
 							AkihabaraAudio.hitAudio("beep"); // Switch sound
@@ -117,7 +117,7 @@
 						}
 					}
 					var pl=AkihabaraGamebox.getObject("player","player");
-					var ontile=help.getTileInMap(pl.x+pl.colx+pl.colhw,pl.y+pl.coly+pl.colhh,tilemaps.map,tilemaps._defaultblock,"map");
+					var ontile=AkihabaraHelp.getTileInMap(pl.x+pl.colx+pl.colhw,pl.y+pl.coly+pl.colhh,tilemaps.map,tilemaps._defaultblock,"map");
 					if (ontile==1) maingame.gotoLevel({level:"floor1",x:60,y:530,label:"Floor 1 stairs"});
 				},
 

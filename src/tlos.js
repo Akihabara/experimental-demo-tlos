@@ -29,10 +29,10 @@ function go() {
 	maingame.gameTitleIntroAnimation=function(reset) {
 		if (reset) {
 			AkihabaraAudio.playAudio("default-music");
-			toys.resetToy(this,"rising");
+			AkihabaraToys.resetToy(this,"rising");
 		} else {
 			AkihabaraGamebox.blitFade(AkihabaraGamebox.getBufferContext(),{alpha:1,color:"rgb(150,150,150)"});
-			toys.logos.rising(this,"rising",{image:"logo",x:AkihabaraGamebox.getScreenHW()-AkihabaraGamebox.getImage("logo").hwidth,y:20,speed:1,gapx:250,reflex:0.1,audioreach:"coin"});
+			AkihabaraToys.logos.rising(this,"rising",{image:"logo",x:AkihabaraGamebox.getScreenHW()-AkihabaraGamebox.getImage("logo").hwidth,y:20,speed:1,gapx:250,reflex:0.1,audioreach:"coin"});
 		}
 	},
 
@@ -45,10 +45,10 @@ function go() {
 	// Level animation
 	maingame.levelIntroAnimation=function(reset) {
 		if (reset) {
-			toys.resetToy(this,"default-blinker");
+			AkihabaraToys.resetToy(this,"default-blinker");
 		} else {
 			AkihabaraGamebox.blitFade(AkihabaraGamebox.getBufferContext(),{alpha:1});
-			return toys.text.fixed(this,"default-blinker",AkihabaraGamebox.getBufferContext(),{font:"big",text:maingame.getNextLevel().label,valign:AkihabaraGamebox.ALIGN_MIDDLE,halign:AkihabaraGamebox.ALIGN_CENTER,dx:0,dy:0,dw:AkihabaraGamebox.getScreenW(),dh:AkihabaraGamebox.getScreenH(),time:50});
+			return AkihabaraToys.text.fixed(this,"default-blinker",AkihabaraGamebox.getBufferContext(),{font:"big",text:maingame.getNextLevel().label,valign:AkihabaraGamebox.ALIGN_MIDDLE,halign:AkihabaraGamebox.ALIGN_CENTER,dx:0,dy:0,dw:AkihabaraGamebox.getScreenW(),dh:AkihabaraGamebox.getScreenH(),time:50});
 		}
 	}
 
@@ -58,10 +58,10 @@ function go() {
 	// Game ending
 	maingame.gameEndingIntroAnimation=function(reset){
 		if (reset) {
-			toys.resetToy(this,"intro-animation");
+			AkihabaraToys.resetToy(this,"intro-animation");
 		} else {
 			AkihabaraGamebox.blitFade(AkihabaraGamebox.getBufferContext(),{alpha:1});
-			return toys.dialogue.render(this,"intro-animation",credits.titles);
+			return AkihabaraToys.dialogue.render(this,"intro-animation",credits.titles);
 		}
 	}
 
@@ -95,7 +95,7 @@ function go() {
 		AkihabaraGamebox.addBundle({
 			file:"resources/bundle-map-"+level.level+".js",
 			onLoad:function(){ // This "onload" operation is triggered after everything is loaded.
-				help.finalizeTilemap(tilemaps.map); // Finalize the map into the bundle
+				AkihabaraHelp.finalizeTilemap(tilemaps.map); // Finalize the map into the bundle
 				AkihabaraGamebox.createCanvas("tileslayer",{w:tilemaps.map.w,h:tilemaps.map.h}); // Prepare map's canvas
 				AkihabaraGamebox.blitTilemap(AkihabaraGamebox.getCanvasContext("tileslayer"),tilemaps.map); // Render map on the canvas
 				topview.spawn(AkihabaraGamebox.getObject("player","player"),{x:level.x,y:level.y}); // Displace player
@@ -151,7 +151,7 @@ function go() {
 
 	// Changes a tile in the map. It also adds smoke if asked.
 	maingame.setTileInMap=function(x,y,tile,smoke) {
-		help.setTileInMap(AkihabaraGamebox.getCanvasContext("tileslayer"),tilemaps.map,x,y,tile);
+		AkihabaraHelp.setTileInMap(AkihabaraGamebox.getCanvasContext("tileslayer"),tilemaps.map,x,y,tile);
 		if (smoke) {
 			var ts=AkihabaraGamebox.getTiles(tilemaps.map.tileset);
 			AkihabaraAudio.hitAudio("explosion"); // Switch sound
@@ -162,16 +162,16 @@ function go() {
 	// Add the "QUEST CLEAR" message
 	maingame.addQuestClear=function(msg) {
 		if (msg==null) AkihabaraAudio.hitAudio("default-menu-confirm"); // Switch sound
-		toys.generate.sparks.popupText(AkihabaraGamebox.getObject("player","player"),"sparks",null,{font:"big",jump:6,text:(msg==null?"QUEST CLEAR!":msg),keep:20});
+		AkihabaraToys.generate.sparks.popupText(AkihabaraGamebox.getObject("player","player"),"sparks",null,{font:"big",jump:6,text:(msg==null?"QUEST CLEAR!":msg),keep:20});
 	}
 
 	// Add spreading smoke on an object
 	maingame.addSmoke=function(ob,color) {
 		// Since camera is not specified (will be into the initializator), is added on the spark instead from the created object
-		toys.generate.sparks.simple(ob,"sparks",null,{camera:true,animspeed:2,accy:-3,accx:-3,tileset:(color==null?"flame-white":color)});
-		toys.generate.sparks.simple(ob,"sparks",null,{camera:true,animspeed:2,accy:-3,accx:3,tileset:(color==null?"flame-white":color)});
-		toys.generate.sparks.simple(ob,"sparks",null,{camera:true,animspeed:2,accy:3,accx:-3,tileset:(color==null?"flame-white":color)});
-		toys.generate.sparks.simple(ob,"sparks",null,{camera:true,animspeed:2,accy:3,accx:3,tileset:(color==null?"flame-white":color)});
+		AkihabaraToys.generate.sparks.simple(ob,"sparks",null,{camera:true,animspeed:2,accy:-3,accx:-3,tileset:(color==null?"flame-white":color)});
+		AkihabaraToys.generate.sparks.simple(ob,"sparks",null,{camera:true,animspeed:2,accy:-3,accx:3,tileset:(color==null?"flame-white":color)});
+		AkihabaraToys.generate.sparks.simple(ob,"sparks",null,{camera:true,animspeed:2,accy:3,accx:-3,tileset:(color==null?"flame-white":color)});
+		AkihabaraToys.generate.sparks.simple(ob,"sparks",null,{camera:true,animspeed:2,accy:3,accx:3,tileset:(color==null?"flame-white":color)});
 	}
 
 	// Add a tresaure chest
@@ -186,9 +186,9 @@ function go() {
 		var door=topview.makedoor("walls",id,tilemaps.map,{whileMoving:function(){
 			this.x+=(this.opencounter%2==0?-1:1)
 			if (this.opencounter%5==0) {
-				toys.generate.sparks.simple(this,"sparks",null,{alpha:0.7,gapy:this.hh,frames:{speed:4,frames:[3,2,1,2,3]},accy:-help.random(0,4),tileset:"flame-white"});
-				toys.generate.sparks.simple(this,"sparks",null,{alpha:0.7,gapx:-this.hw/2,gapy:this.hh,frames:{speed:4,frames:[3,2,1,2,3]},accy:-help.random(0,4),accx:-1,tileset:"flame-white"});
-				toys.generate.sparks.simple(this,"sparks",null,{alpha:0.7,gapx:this.hw/2,gapy:this.hh,frames:{speed:4,frames:[3,2,1,2,3]},accy:-help.random(0,4),accx:1,tileset:"flame-white"});
+				AkihabaraToys.generate.sparks.simple(this,"sparks",null,{alpha:0.7,gapy:this.hh,frames:{speed:4,frames:[3,2,1,2,3]},accy:-AkihabaraHelp.random(0,4),tileset:"flame-white"});
+				AkihabaraToys.generate.sparks.simple(this,"sparks",null,{alpha:0.7,gapx:-this.hw/2,gapy:this.hh,frames:{speed:4,frames:[3,2,1,2,3]},accy:-AkihabaraHelp.random(0,4),accx:-1,tileset:"flame-white"});
+				AkihabaraToys.generate.sparks.simple(this,"sparks",null,{alpha:0.7,gapx:this.hw/2,gapy:this.hh,frames:{speed:4,frames:[3,2,1,2,3]},accy:-AkihabaraHelp.random(0,4),accx:1,tileset:"flame-white"});
 			}
 		},whenClosed:function() {
 			this.x++; // Place the door in the right position
@@ -223,7 +223,7 @@ function go() {
 				blit:function() {
 					if (this.pause)
 						this.pause--;
-					else if (toys.dialogue.render(this,"dialogue",dialogues[this.dialogueToRead])) { // If the dialogue is ended
+					else if (AkihabaraToys.dialogue.render(this,"dialogue",dialogues[this.dialogueToRead])) { // If the dialogue is ended
 						if (dialogues[this.dialogueToRead].endgame) // If the dialogue is marked by "endgame"...
 							maingame.gameIsCompleted(); // The game is completed
 						else
@@ -275,7 +275,7 @@ function go() {
 
 // BOOTSTRAP
 AkihabaraGamebox.onLoad(function () {
-	help.akihabaraInit({title:"The Legend Of Sadness",splash:{footnotes:["Musics by: Greenleo, Graulund, Robert Jaret.","Full credits on ending title."]}});
+	AkihabaraHelp.akihabaraInit({title:"The Legend Of Sadness",splash:{footnotes:["Musics by: Greenleo, Graulund, Robert Jaret.","Full credits on ending title."]}});
 
 	// We are not going to use faces for dialogues
 	noface={ noone:{ x:10, y:170,box:{x:0,y:160,w:AkihabaraGamebox.getScreenW(),h:60,alpha:0.5} } };
