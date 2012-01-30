@@ -275,7 +275,15 @@ function go() {
 
 // BOOTSTRAP
 AkihabaraGamebox.onLoad(function () {
-	AkihabaraHelp.akihabaraInit({title:"The Legend Of Sadness",splash:{footnotes:["Musics by: Greenleo, Graulund, Robert Jaret.","Full credits on ending title."]}});
+	Akihabara.createNewGame({
+		title: "The Legend Of Sadness",
+		splash: {
+			footnotes:[
+				"Musics by: Greenleo, Graulund, Robert Jaret.",
+				"Full credits on ending title."
+			]
+		}
+	});
 
 	// We are not going to use faces for dialogues
 	noface={ noone:{ x:10, y:170,box:{x:0,y:160,w:AkihabaraGamebox.getScreenW(),h:60,alpha:0.5} } };
