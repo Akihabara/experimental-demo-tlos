@@ -95,7 +95,7 @@ function go() {
 		AkihabaraGamebox.addBundle({
 			file:"resources/bundle-map-"+level.level+".js",
 			onLoad:function(){ // This "onload" operation is triggered after everything is loaded.
-				AkihabaraHelp.finalizeTilemap(tilemaps.map); // Finalize the map into the bundle
+				AkihabaraHelpers.finalizeTilemap(tilemaps.map); // Finalize the map into the bundle
 				AkihabaraGamebox.createCanvas("tileslayer",{w:tilemaps.map.w,h:tilemaps.map.h}); // Prepare map's canvas
 				AkihabaraGamebox.blitTilemap(AkihabaraGamebox.getCanvasContext("tileslayer"),tilemaps.map); // Render map on the canvas
 				AkihabaraTopview.spawn(AkihabaraGamebox.getObject("player","player"),{x:level.x,y:level.y}); // Displace player
@@ -151,7 +151,7 @@ function go() {
 
 	// Changes a tile in the map. It also adds smoke if asked.
 	maingame.setTileInMap=function(x,y,tile,smoke) {
-		AkihabaraHelp.setTileInMap(AkihabaraGamebox.getCanvasContext("tileslayer"),tilemaps.map,x,y,tile);
+		AkihabaraHelpers.setTileInMap(AkihabaraGamebox.getCanvasContext("tileslayer"),tilemaps.map,x,y,tile);
 		if (smoke) {
 			var ts=AkihabaraGamebox.getTiles(tilemaps.map.tileset);
 			AkihabaraAudio.hitAudio("explosion"); // Switch sound
@@ -186,9 +186,9 @@ function go() {
 		var door=AkihabaraTopview.makedoor("walls",id,tilemaps.map,{whileMoving:function(){
 			this.x+=(this.opencounter%2==0?-1:1)
 			if (this.opencounter%5==0) {
-				AkihabaraToys.generate.sparks.simple(this,"sparks",null,{alpha:0.7,gapy:this.hh,frames:{speed:4,frames:[3,2,1,2,3]},accy:-AkihabaraHelp.random(0,4),tileset:"flame-white"});
-				AkihabaraToys.generate.sparks.simple(this,"sparks",null,{alpha:0.7,gapx:-this.hw/2,gapy:this.hh,frames:{speed:4,frames:[3,2,1,2,3]},accy:-AkihabaraHelp.random(0,4),accx:-1,tileset:"flame-white"});
-				AkihabaraToys.generate.sparks.simple(this,"sparks",null,{alpha:0.7,gapx:this.hw/2,gapy:this.hh,frames:{speed:4,frames:[3,2,1,2,3]},accy:-AkihabaraHelp.random(0,4),accx:1,tileset:"flame-white"});
+				AkihabaraToys.generate.sparks.simple(this,"sparks",null,{alpha:0.7,gapy:this.hh,frames:{speed:4,frames:[3,2,1,2,3]},accy:-AkihabaraHelpers.random(0,4),tileset:"flame-white"});
+				AkihabaraToys.generate.sparks.simple(this,"sparks",null,{alpha:0.7,gapx:-this.hw/2,gapy:this.hh,frames:{speed:4,frames:[3,2,1,2,3]},accy:-AkihabaraHelpers.random(0,4),accx:-1,tileset:"flame-white"});
+				AkihabaraToys.generate.sparks.simple(this,"sparks",null,{alpha:0.7,gapx:this.hw/2,gapy:this.hh,frames:{speed:4,frames:[3,2,1,2,3]},accy:-AkihabaraHelpers.random(0,4),accx:1,tileset:"flame-white"});
 			}
 		},whenClosed:function() {
 			this.x++; // Place the door in the right position

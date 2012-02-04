@@ -72,7 +72,7 @@ var Enemy = function(id,type,x,y,cloud){
 					AkihabaraToys.generate.sparks.simple(this,"sparks",null,{animspeed:2,accy:-3,tileset:"flame-blue"});
 					AkihabaraToys.generate.sparks.simple(this,"sparks",null,{animspeed:1,accx:-3,tileset:"flame-blue"});
 					AkihabaraToys.generate.sparks.simple(this,"sparks",null,{animspeed:1,accx:3,tileset:"flame-blue"});
-					if (AkihabaraHelp.random(0,2)==0) maingame.addBonus(this.x,this.y,"coin"); // reward with a coin, sometime
+					if (AkihabaraHelpers.random(0,2)==0) maingame.addBonus(this.x,this.y,"coin"); // reward with a coin, sometime
 					AkihabaraGamebox.trashObject(this); // Vanish!
 				},
 
