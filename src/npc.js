@@ -29,7 +29,7 @@ var Npc = function(x,y,still,dialogue,questid,talking,silence){
 			this.counter=(this.counter+1)%12;
 
 			if (this.iamTalking) {
-				this.frame=AkihabaraHelpers.decideFrame(this.counter,this.frames.talking);
+				this.frame=AkihabaraGamebox.decideFrame(this.counter,this.frames.talking);
 				if (!AkihabaraGamebox.getObject("foreground","dialogue")) {// Check if the dialogue ended
 					this.iamTalking=false; // Stop talking
 					if ((this.questid!=null)&&(!tilemaps.queststatus[this.questid])) {
@@ -38,7 +38,7 @@ var Npc = function(x,y,still,dialogue,questid,talking,silence){
 					}
 				}
 			} else
-				this.frame=AkihabaraHelpers.decideFrame(this.counter,this.frames.still);
+				this.frame=AkihabaraGamebox.decideFrame(this.counter,this.frames.still);
 		},
 
 		blit:function() {
