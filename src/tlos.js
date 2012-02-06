@@ -95,7 +95,7 @@ function go() {
 		AkihabaraGamebox.addBundle({
 			file:"resources/bundle-map-"+level.level+".js",
 			onLoad:function(){ // This "onload" operation is triggered after everything is loaded.
-				AkihabaraHelpers.finalizeTilemap(tilemaps.map); // Finalize the map into the bundle
+				AkihabaraTile.finalizeTilemap(tilemaps.map); // Finalize the map into the bundle
 				AkihabaraGamebox.createCanvas("tileslayer",{w:tilemaps.map.w,h:tilemaps.map.h}); // Prepare map's canvas
 				AkihabaraGamebox.blitTilemap(AkihabaraGamebox.getCanvasContext("tileslayer"),tilemaps.map); // Render map on the canvas
 				AkihabaraTopview.spawn(AkihabaraGamebox.getObject("player","player"),{x:level.x,y:level.y}); // Displace player
@@ -151,7 +151,7 @@ function go() {
 
 	// Changes a tile in the map. It also adds smoke if asked.
 	maingame.setTileInMap=function(x,y,tile,smoke) {
-		AkihabaraHelpers.setTileInMap(AkihabaraGamebox.getCanvasContext("tileslayer"),tilemaps.map,x,y,tile);
+		AkihabaraTile.setTileInMap(AkihabaraGamebox.getCanvasContext("tileslayer"),tilemaps.map,x,y,tile);
 		if (smoke) {
 			var ts=AkihabaraGamebox.getTiles(tilemaps.map.tileset);
 			AkihabaraAudio.hitAudio("explosion"); // Switch sound

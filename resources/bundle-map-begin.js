@@ -79,7 +79,7 @@
 
 				mapActions:function() {
 					var pl=AkihabaraGamebox.getObject("player","player");
-					var ontile=AkihabaraHelp.getTileInMap(pl.x+pl.colx+pl.colhw,pl.y+pl.coly+pl.colhh,tilemaps.map,tilemaps._defaultblock,"map");
+					var ontile=AkihabaraTile.getTileInMap(pl.x+pl.colx+pl.colhw,pl.y+pl.coly+pl.colhh,tilemaps.map,tilemaps._defaultblock,"map");
 					if (ontile==1) maingame.gotoLevel({level:"floor1",x:580,y:590,label:"Floor 1 entrance"});
 				},
 
